@@ -16,12 +16,12 @@ import importlib
 import time
 
 import rclpy
+from rosidl_runtime_py import set_message_fields
+from rosidl_runtime_py import SetFieldError
 from ros2cli.node import NODE_NAME_PREFIX
 from ros2service.api import ServiceNameCompleter
 from ros2service.api import ServiceTypeCompleter
 from ros2service.verb import VerbExtension
-from ros2topic.api import set_msg_fields
-from ros2topic.api import SetFieldError
 import yaml
 
 
@@ -84,7 +84,7 @@ def requester(service_type, service_name, values, period):
     request = srv_module.Request()
 
     try:
-        set_msg_fields(request, values_dictionary)
+        set_message_fields(request, values_dictionary)
     except SetFieldError as e:  # noqa: F841
         return "Failed to populate field '{e.field_name}': {e.exception}" \
             .format_map(locals())
